@@ -1,6 +1,13 @@
 "use strict";
 const $ = selector => document.querySelector(selector); 
 
+const _title = courseInfo.title;
+const _term = courseInfo.term;
+const _sectionNumber = courseInfo.sectionNumber;   
+const _description = courseInfo.description;
+const _credits = courseInfo.credits;  
+const _students = courseInfo.students;
+
 /** Chapter 6 concept - DOM */
 const createElementWithText = (tagName, text) => {
     const element = document.createElement(tagName);
