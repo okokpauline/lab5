@@ -4,14 +4,14 @@ body {
     background-color: white;
     margin: 0 auto;
     width: 510px;
-    border: 3px solid blue;
+    border: 3px solid rgb(95, 95, 151);
     padding: 0 2em 1em; 
 }
 h1 {
-    color: blue;
+    color: rgb(25, 93, 250);
 }
 h2 {
-	color: blue;
+    color: rgb(25, 93, 250);
 	font-size: 120%;
 	padding: 0;
 	margin-bottom: .5em;

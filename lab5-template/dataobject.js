@@ -8,7 +8,7 @@ const courseInfo = {
     credits: 4.00,     
     students: [
         { firstName: "Joe", lastName: "Smith", score: 88 },
-        { firstNme: "John", lastName: "Doe", score: 65 },
+        { firstName: "John", lastName: "Doe", score: 65 },
         { firstName: "Joel", lastName: "Garcia", score: 98 },
         { firstName: "Judy", lastName: "Johnson", score: 77 },
         { firstName: "Anne", lastName: "Dew", score: 88 }

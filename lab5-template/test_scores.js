@@ -8,7 +8,6 @@ const _description = courseInfo.description;
 const _credits = courseInfo.credits;  
 const _students = courseInfo.students;
 
-/** Chapter 6 concept - DOM */
 const createElementWithText = (tagName, text) => {
   const element = document.createElement(tagName);
   const textNode = document.createTextNode(text);
@@ -22,32 +21,36 @@ const add = () => {
   let scoreElm = $("#score");
   let isValid = true;    
   if (firstElm.value == "") {
-      firstElm.nextElementSibling.textContent = "This field is required."; // span
+      firstElm.nextElementSibling.textContent = "First name is required."; 
       isValid = false; 
   } else {
       firstElm.nextElementSibling.textContent = ""; 
+      isValid = true;
   }
   if (lastElm.value == "") {
-      lastElm.nextElementSibling.textContent = "This field is required."; // span
+      lastElm.nextElementSibling.textContent = "Last name is required."; 
       isValid = false; 
   } else {
       lastElm.nextElementSibling.textContent = ""; 
+      isValid = true;
   }
-  if (scoreElm.value == "") {
-      scoreElm.nextElementSibling.textContent = "This field is required."; // span
-      isValid = false; 
+  const scoreValue = parseFloat(scoreElm.value);
+  if (isNaN(scoreValue) || scoreValue < 0 || scoreValue > 100) {
+    scoreElm.nextElementSibling.textContent = "Score must be a number between 0 and 100.";
+    isValid = false;
   } else {
-      scoreElm.nextElementSibling.textContent = ""; 
+    scoreElm.nextElementSibling.textContent = "";
+    isValid = true;
   }
 
-  const array_scores = courseInfo.students;
-  // add new to array_scores
-  let newStudent = {firstName: "", lastName: "", score: 0};
-  // capture the data from the webApp
-  newStudent.firstName = firstElm.value;
-  newStudent.lastName = lastElm.value;
-  newStudent.score = parseFloat(scoreElm.value);
-  array_scores.push(newStudent); // add line 15
+  if (isValid) {
+    const array_scores = courseInfo.students;
+    let newStudent = {firstName: "", lastName: "", score: 0};
+    newStudent.firstName = firstElm.value;
+    newStudent.lastName = lastElm.value;
+    newStudent.score = parseFloat(scoreElm.value);
+    array_scores.push(newStudent);
+  }
 };
 
 const displayResults = () => {
@@ -64,7 +67,7 @@ const displayResults = () => {
     totalScores += currentScore;
     if (currentScore > highscore) {
       highscore = currentScore;
-      highscoreStudentName = currentFirstName + ' ' + currentLastName;
+      highscoreStudentName = `${currentFirstName} ${currentLastName}`;
     }
   }
   average = totalScores / array_scores.length;
@@ -82,17 +85,33 @@ const displayResults = () => {
 
 const displayScores = () => {
   const array_scores = courseInfo.students;
-  // Using DOM to write the scores to your WebApp
   let elmScores = $("#scores");
-  // TODO using DOM ...
-
-};
+  elmScores.innerHTML = "";
+  
+  let heading = createElementWithText("h2","Scores");
+  elmScores.appendChild(heading);
+  
+  for (let i = 0; i < array_scores.length; i++) {
+    const student = array_scores[i];
+    const currentFirstName = student.firstName;
+    const currentLastName = student.lastName;
+    const currentScore = student.score;
+    const studentInfo = createElementWithText("p",`${currentFirstName} ${currentLastName} ${currentScore}`);
+    
+    elmScores.appendChild(studentInfo);
+    // elmScores.appendChild(createElementWithText("br", ''));
+    // the above isn't needed to go to a new line but I have it here because this was in the instructions
+  }
+}; 
 
 document.addEventListener("DOMContentLoaded", () => {    
+  $("#first-name").focus();
 
-  // event function handler - "add", "display-results", "display-scores"
-  // example how to add element the existing element in your html
-  $("#add").addEventListener("click", add);
+  $("#add").addEventListener("click" , () => {
+    add();
+  $("#first-name").focus();
+});
+
   $("#display-results").addEventListener("click", displayResults);
   $("#display-scores").addEventListener("click", displayScores);        
 });
